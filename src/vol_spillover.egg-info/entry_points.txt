@@ -1,0 +1,2 @@
+[console_scripts]
+vs = vol_spillover.cli:app
