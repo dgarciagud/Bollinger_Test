@@ -1,0 +1,89 @@
+download:
+  timeframe: "m1"
+  batch_pause_ms: 1000
+  retries: 5
+  retry_pause_ms: 500
+  history_days: 365 # 1 year up to yesterday
+
+instruments:
+  - id: "usa500idxusd"
+    name: "S&P 500"
+    block: "Indices"
+    role: "receptor"
+  - id: "usatechidxusd"
+    name: "Nasdaq 100"
+    block: "Indices"
+    role: "receptor"
+  - id: "eusidxeur"
+    name: "Euro Stoxx 50"
+    block: "Indices"
+    role: "receptor"
+  - id: "deuidxeur"
+    name: "DAX"
+    block: "Indices"
+    role: "receptor"
+  - id: "jpnidxjpy"
+    name: "Nikkei 225"
+    block: "Indices"
+    role: "receptor"
+  - id: "lightcmdusd"
+    name: "WTI Crude Oil"
+    block: "Energy"
+    role: "candidato"
+  - id: "brentcmdusd"
+    name: "Brent Crude Oil"
+    block: "Energy"
+    role: "candidato"
+  - id: "usttbondtrusd"
+    name: "US T-Bond"
+    block: "Rates"
+    role: "candidato"
+  - id: "bundtreur"
+    name: "Bund"
+    block: "Rates"
+    role: "candidato"
+  - id: "eurusd"
+    name: "EUR/USD"
+    block: "FX"
+    role: "candidato"
+  - id: "usdjpy"
+    name: "USD/JPY"
+    block: "FX"
+    role: "candidato"
+  - id: "dollaridxusd"
+    name: "Dollar Index"
+    block: "FX"
+    role: "candidato"
+  - id: "xauusd"
+    name: "Gold"
+    block: "Safe Haven"
+    role: "candidato"
+
+cleaning:
+  spread_multiplier_k: 10
+  min_coverage_pct: 50.0
+  exclude_dates_mmdd: ["12-24", "12-25", "12-26", "12-31", "01-01"]
+  day_boundary_utc: "22:00"
+
+realized:
+  subsample_minutes: 5
+  abnormal_percentile: 95
+  abnormal_rolling_window: 250
+
+connect:
+  var_max_lag: 5
+  forecast_horizon: 10
+  dy_rolling_window: 100 # adjusted for 1-year data scope (~250 days) so we have ~150 window outputs
+  tvp_kappa1: 0.99
+  tvp_kappa2: 0.99
+  quantiles: [0.05, 0.50, 0.95]
+  freq_bands:
+    short: [1, 5]
+    medium: [5, 20]
+    long: [20, 1000]
+
+paths:
+  raw_dir: "data/raw"
+  clean_dir: "data/clean"
+  features_dir: "data/features"
+  reports_dir: "reports"
